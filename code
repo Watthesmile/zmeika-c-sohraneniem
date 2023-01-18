@@ -29,6 +29,12 @@ def maxscoreofall(msg , color):
 def win(msg , color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [235, 400])
+def daorne(filePath):
+    try:
+        with open(f'{filePath}.txt', 'r') as f:
+            return True
+    except FileNotFoundError as e:
+        return False
 
 #фпс
 clock = pygame.time.Clock()
@@ -169,9 +175,15 @@ while not game_end:
     if game_over == True and game_end == False:
         cool =[]
         maxxx =[]
-        f = open(f'{name}.txt','a')
-        f.write(f',{score}')
-        f.close()
+        if daorne(name) == True:
+            f = open(f'{name}.txt','a')
+            f.write(f',{score}')
+            f.close()
+        else:
+            f = open(f'{name}.txt','w')
+            f.write('0')
+            f.write(f',{score}')
+            f.close()
         F = open(f'{name}.txt','r')
         for line in F:
             cool.append([int(float(x)) for x in line.split(',')])
@@ -201,4 +213,3 @@ while not game_end:
         game_over = False
 pygame.quit()
 quit()
-#код сделан ганиевым александром
