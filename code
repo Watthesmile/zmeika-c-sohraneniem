@@ -204,7 +204,7 @@ while not game_end:
             D.close()
         dis.blit(fonend, (0,0))
         if zam == 1:
-            win('you beat old score!!!', 'red')
+            win('you beat old max score!!!', 'red')
         message(f'you lose with score: {score}', 'black')
         maxscore(f'your max score is: {yrmaxscore}', 'black')
         maxscoreofall(f'max score of all: {maxofalll}', 'black')
