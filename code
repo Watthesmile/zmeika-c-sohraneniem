@@ -19,7 +19,16 @@ def message(msg,color):
 
 def sscore(msg , color):
     mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [0, 0])
+    dis.blit(mesg, [335, 150])
+def maxscore(msg , color):
+    mesg = font_style.render(msg, True, color)
+    dis.blit(mesg, [235, 125])
+def maxscoreofall(msg , color):
+    mesg = font_style.render(msg, True, color)
+    dis.blit(mesg, [235, 25])
+def win(msg , color):
+    mesg = font_style.render(msg, True, color)
+    dis.blit(mesg, [235, 400])
 
 #фпс
 clock = pygame.time.Clock()
@@ -27,9 +36,12 @@ clock = pygame.time.Clock()
 #переменные
 
 game_end=False
-
+name = input('введите имя: ')
 while not game_end:
     q = 4
+    maxofalll = 0
+    zam = 0
+
     napravlenie = 'up'
     fonend = pygame.image.load('fonend.jpg')
     fon = pygame.image.load('fongame.jpg')
@@ -69,10 +81,8 @@ while not game_end:
                     y1_change = 0
                     napravlenie = 'right'
 
-
-
-
         dis.blit(fon, (0,0))
+        #dis.blit(fon, (0,0))
         lastcoord = [xy[0],xy[1]]
         xy[0] += x1_change
         xy[1] += y1_change
@@ -91,6 +101,7 @@ while not game_end:
         if co == xy:
             eaten=True
             score=score+1
+
         if eaten==True:
             applesX = random.randint(1, 31)*25
             applesY = random.randint(1, 23)*25
@@ -109,7 +120,6 @@ while not game_end:
             rotimg = pygame.transform.rotate(cathead, 90)
         if napravlenie == 'down':
             rotimg = pygame.transform.rotate(cathead, 180)
-        dis.blit(rotimg, (xy[0], xy[1], 25, 25))
         if len(telo) != 1:
             for i in range(len(telo)):
                 if telo[i][2] == 1:
@@ -120,9 +130,25 @@ while not game_end:
                     rotimgtelo = pygame.transform.rotate(telogift, 180)
                 if telo[i][2] == 4:
                     rotimgtelo = telogift
+
                 dis.blit(rotimgtelo, (telo[i][0], telo[i][1]))
                 if xy[0] == telo[i][0] and xy[1]==telo[i][1]:
                     game_over=True
+        else:
+            if len(telo)!=0:
+                if telo[0][2] == 1:
+                    rotimgtelo = pygame.transform.rotate(telogift, -90)
+                if telo[0][2] == 2:
+                    rotimgtelo = pygame.transform.rotate(telogift, 90)
+                if telo[0][2] == 3:
+                    rotimgtelo = pygame.transform.rotate(telogift, 180)
+                if telo[0][2] == 4:
+                    rotimgtelo = telogift
+
+                dis.blit(rotimgtelo, (telo[0][0], telo[0][1]))
+        dis.blit(rotimg, (xy[0], xy[1], 25, 25))
+
+
         if len(telo)==score:
             telo.pop(0)
 
@@ -135,17 +161,44 @@ while not game_end:
         if napravlenie == 'up':
             q=4
         telo.append([xy[0],xy[1],q])
-        sscore(f'score: {score}','grey')
+        sscore(f'score: {score}','darkgreen')
 
 
         pygame.display.update()
-        clock.tick(8.5)
+        clock.tick(10)
     if game_over == True and game_end == False:
+        cool =[]
+        maxxx =[]
+        f = open(f'{name}.txt','a')
+        f.write(f',{score}')
+        f.close()
+        F = open(f'{name}.txt','r')
+        for line in F:
+            cool.append([int(float(x)) for x in line.split(',')])
+        yrmaxscore = max(cool[0])
+        F.close()
+        d = open('max.txt','r')
+        for line in d:
+            maxxx.append([int(float(x)) for x in line.split(',')])
+        if max(maxxx[0])<yrmaxscore:
+            zam =1
+            maxofalll=score
+        else:
+            maxofalll=max(maxxx[0])
+        d.close()
+        if zam == 1:
+            D = open('max.txt','a')
+            D.write(f',{score}')
+            D.close()
         dis.blit(fonend, (0,0))
+        if zam == 1:
+            win('you beat old score!!!', 'red')
         message(f'you lose with score: {score}', 'black')
+        maxscore(f'your max score is: {yrmaxscore}', 'black')
+        maxscoreofall(f'max score of all: {maxofalll}', 'black')
         pygame.display.update()
         time.sleep(2)
         game_over = False
 pygame.quit()
 quit()
-#сделай общий счёт/сколько игр/средний счёт и всё это сохраняется в отдельном файле
+#код сделан ганиевым александром
