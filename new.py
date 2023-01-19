@@ -8,3 +8,6 @@ if daorne('maxx') == False:
     p = open('maxx.txt','w')
     p.write('0')
     p.close()
+    print('you can play!!!')
+else:
+    print('you already did it, you can play!')
