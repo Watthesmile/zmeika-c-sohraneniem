@@ -42,7 +42,7 @@ clock = pygame.time.Clock()
 #переменные
 
 game_end=False
-name = input('введите имя: ')
+name = input('введите имя на английском: ')
 while not game_end:
     q = 4
     maxofalll = 0
