@@ -189,7 +189,7 @@ while not game_end:
             cool.append([int(float(x)) for x in line.split(',')])
         yrmaxscore = max(cool[0])
         F.close()
-        d = open('max.txt','r')
+        d = open('maxx.txt','r')
         for line in d:
             maxxx.append([int(float(x)) for x in line.split(',')])
         if max(maxxx[0])<yrmaxscore:
@@ -199,7 +199,7 @@ while not game_end:
             maxofalll=max(maxxx[0])
         d.close()
         if zam == 1:
-            D = open('max.txt','a')
+            D = open('maxx.txt','a')
             D.write(f',{score}')
             D.close()
         dis.blit(fonend, (0,0))
