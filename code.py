@@ -4,7 +4,7 @@ import time
 pygame.init()
 
 
-
+name = input('введите имя на английском: ')
 dis = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('Snake')
 
@@ -42,7 +42,7 @@ clock = pygame.time.Clock()
 #переменные
 
 game_end=False
-name = input('введите имя на английском: ')
+
 while not game_end:
     q = 4
     maxofalll = 0
