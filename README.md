@@ -19,7 +19,7 @@ pip install random
 ###### to play you must download all files without readme to one directory
 
 
-###### at the last you must open cmd, go to file with files(in cmd) and write:
+###### at the last you must open cmd, go to directory with files(in cmd) and write:
 
 ```
 python3 new.py
