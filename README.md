@@ -16,7 +16,7 @@ pip install time
 pip install random
 ```
 
-###### to play you must download all files without readme to one file
+###### to play you must download all files without readme to one directory
 
 
 ###### at the last you must open cmd, go to file with files(in cmd) and write:
