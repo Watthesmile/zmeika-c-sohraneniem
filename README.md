@@ -22,12 +22,6 @@ pip install random
 ###### at the last you must open cmd, go to directory with files(in cmd) and write:
 
 
-only if you play in first time:
-```
-python3 new.py
-```
-
-every time:
 ```
 python3 code.py
 ```
