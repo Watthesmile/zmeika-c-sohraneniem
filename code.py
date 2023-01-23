@@ -1,40 +1,28 @@
 import pygame
 import random
 import time
+
 pygame.init()
-
-
 name = input('введите имя на английском: ')
 dis = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('Snake')
 
-game_over = False
-
-
 #сообщение
 font_style = pygame.font.SysFont(None, 50)
-def message(msg,color):
-    mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [235, 250])
+def message(msg,collor):
+    mesg = font_style.render(msg, True, collor)
+    dis.blit(mesg, [235, 140])
 
-def sscore(msg , color):
-    mesg = font_style.render(msg, True, color)
+def sscore(msg , collor):
+    mesg = font_style.render(msg, True, collor)
     dis.blit(mesg, [335, 150])
-def maxscore(msg , color):
-    mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [235, 125])
-def maxscoreofall(msg , color):
-    mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [235, 25])
-def win(msg , color):
-    mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [235, 400])
-def daorne(filePath):
-    try:
-        with open(f'{filePath}.txt', 'r') as f:
-            return True
-    except FileNotFoundError as e:
-        return False
+def records(msg, collor, x):
+    mesg = font_style.render(msg, True, collor)
+    dis.blit(mesg, [235, x])
+
+def beat(msg , collor):
+    mesg = font_style.render(msg, True, collor)
+    dis.blit(mesg, [235, 75])
 
 #фпс
 clock = pygame.time.Clock()
@@ -42,7 +30,6 @@ clock = pygame.time.Clock()
 #переменные
 
 game_end=False
-
 while not game_end:
     q = 4
     maxofalll = 0
@@ -64,6 +51,8 @@ while not game_end:
     white = (255, 255, 255)
     black = (0, 0, 0)
     red = (255, 0, 0)
+
+    game_over = False
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -173,43 +162,53 @@ while not game_end:
         pygame.display.update()
         clock.tick(10)
     if game_over == True and game_end == False:
-        cool =[]
-        maxxx =[]
-        if daorne(name) == True:
-            f = open(f'{name}.txt','a')
-            f.write(f',{score}')
-            f.close()
-        else:
-            f = open(f'{name}.txt','w')
-            f.write('0')
-            f.write(f',{score}')
-            f.close()
-        F = open(f'{name}.txt','r')
-        for line in F:
-            cool.append([int(float(x)) for x in line.split(',')])
-        yrmaxscore = max(cool[0])
-        F.close()
-        d = open('maxx.txt','r')
-        for line in d:
-            maxxx.append([int(float(x)) for x in line.split(',')])
-        if max(maxxx[0])<yrmaxscore:
-            zam =1
-            maxofalll=score
-        else:
-            maxofalll=max(maxxx[0])
-        d.close()
-        if zam == 1:
-            D = open('maxx.txt','a')
-            D.write(f',{score}')
-            D.close()
-        dis.blit(fonend, (0,0))
-        if zam == 1:
-            win('you beat old max score!!!', 'red')
-        message(f'you lose with score: {score}', 'black')
-        maxscore(f'your max score is: {yrmaxscore}', 'black')
-        maxscoreofall(f'max score of all: {maxofalll}', 'black')
-        pygame.display.update()
-        time.sleep(2)
-        game_over = False
+            print('1')
+            record = 'unbeat'
+            dockread = open('maxx.txt', 'r')
+            apt = []
+            number = 0
+            datadwa = []
+            data = dockread.readlines()
+            data = [line.rstrip() for line in data]
+            print(data)
+            dockread.close()
+            print(data[1])
+            if int(data[1])<score:
+                record = 'beat'
+            if record == 'beat':
+                data.pop(1)
+                data.pop(0)
+                data.append(f'{name}')
+                data.append(score)
+                writefile = open('maxx.txt', 'w')
+                print('побит')
+                for i in [1,3,5,7,9]:
+                    datadwa.append([int(data[i]), f'{data[i-1]}'])
+                print(f'datadwa={datadwa}')
+                datadwa.sort(key=lambda student: student[0])
+
+                for i in range(len(datadwa)):
+                    writefile.write(f'{datadwa[i][1]}\n')
+                    writefile.write(f'{datadwa[i][0]}\n')
+                writefile.close()
+            else:
+                for i in [1,3,5,7,9]:
+                    datadwa.append([int(data[i]), f'{data[i-1]}'])
+                print(f'datadwa={datadwa}')
+                datadwa.sort(key=lambda student: student[0])
+
+            dis.blit(fonend, (0,0))
+            message(f'you lose with score: {score}', 'black')
+            if record == 'beat':
+                beat('u beat one of the max records', 'red')
+            records('top','black', 200)
+            records(f'{datadwa[4][1]}  {datadwa[4][0]}', 'red', 270)
+            records(f'{datadwa[3][1]}  {datadwa[3][0]}', 'pink', 310)
+            records(f'{datadwa[2][1]}  {datadwa[2][0]}', 'yellow', 350)
+            records(f'{datadwa[1][1]}  {datadwa[1][0]}', 'brown', 390)
+            records(f'{datadwa[0][1]}  {datadwa[0][0]}', 'black', 430)
+            pygame.display.update()
+            time.sleep(2)
+            game_over = False
 pygame.quit()
 quit()
