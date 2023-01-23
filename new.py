@@ -6,7 +6,10 @@ def daorne(filePath):
         return False
 if daorne('maxx') == False:
     p = open('maxx.txt','w')
-    p.write('0')
+    for i in range(5):
+        p.write('a\n')
+        p.write('0\n')
+
     p.close()
     print('you can play!!!')
 else:
