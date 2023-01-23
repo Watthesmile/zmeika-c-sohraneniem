@@ -3,6 +3,23 @@ import random
 import time
 
 pygame.init()
+
+def daorne(filePath):
+    try:
+        with open(f'{filePath}.txt', 'r') as f:
+            return True
+    except FileNotFoundError as e:
+        return False
+if daorne('maxx') == False:
+    p = open('maxx.txt','w')
+    for i in range(5):
+        p.write('a\n')
+        p.write('0\n')
+
+    p.close()
+    print('you can play!!!')
+else:
+    print('you already did it, you can play!')
 name = input('введите имя на английском: ')
 dis = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('Snake')
