@@ -162,7 +162,6 @@ while not game_end:
         pygame.display.update()
         clock.tick(10)
     if game_over == True and game_end == False:
-            print('1')
             record = 'unbeat'
             dockread = open('maxx.txt', 'r')
             apt = []
@@ -170,9 +169,7 @@ while not game_end:
             datadwa = []
             data = dockread.readlines()
             data = [line.rstrip() for line in data]
-            print(data)
             dockread.close()
-            print(data[1])
             if int(data[1])<score:
                 record = 'beat'
             if record == 'beat':
@@ -181,12 +178,9 @@ while not game_end:
                 data.append(f'{name}')
                 data.append(score)
                 writefile = open('maxx.txt', 'w')
-                print('побит')
                 for i in [1,3,5,7,9]:
                     datadwa.append([int(data[i]), f'{data[i-1]}'])
-                print(f'datadwa={datadwa}')
                 datadwa.sort(key=lambda student: student[0])
-
                 for i in range(len(datadwa)):
                     writefile.write(f'{datadwa[i][1]}\n')
                     writefile.write(f'{datadwa[i][0]}\n')
@@ -194,9 +188,7 @@ while not game_end:
             else:
                 for i in [1,3,5,7,9]:
                     datadwa.append([int(data[i]), f'{data[i-1]}'])
-                print(f'datadwa={datadwa}')
                 datadwa.sort(key=lambda student: student[0])
-
             dis.blit(fonend, (0,0))
             message(f'you lose with score: {score}', 'black')
             if record == 'beat':
